@@ -33,7 +33,7 @@ public class Line {
         }
         this.start = start;
         this.end = end;
-        if (this.doubleEquals(start.getX(), end.getX())) {
+        if (Utility.doubleEquals(start.getX(), end.getX())) {
             this.isVertical = true;
             this.slope = null;
             this.freePart = 0;
@@ -117,8 +117,8 @@ public class Line {
         }
 
         if (!this.isVertical() && !other.isVertical()) {
-            if (this.doubleEquals(this.slope, other.slope())) {
-                if (this.doubleEquals(this.freePart, other.getFreePart())) {
+            if (Utility.doubleEquals(this.slope, other.slope())) {
+                if (Utility.doubleEquals(this.freePart, other.getFreePart())) {
                     return (this.start().getX() >= other.start().getX() && this.start().getX() <= other.end().getX())
                             || (this.end().getX() >= other.start().getX() && this.end().getX() <= other.end().getX())
                             || (other.end().getX() >= this.start().getX() && other.end().getX() <= this.end().getX())
@@ -129,7 +129,7 @@ public class Line {
                 }
             }
             //slope is not equal:
-            double intersectionPointX = (other.getFreePart() - this.getFreePart()) / (this.slope() - other.slope());
+            double intersectionPointX = (other.getFreePart() - this.freePart) / (this.slope() - other.slope());
             return intersectionPointX >= this.start().getX() && intersectionPointX <= this.end().getX()
                     && intersectionPointX >= other.start().getX() && intersectionPointX <= other.end().getX();
         }
@@ -145,7 +145,7 @@ public class Line {
 
         if (other.isVertical() && !this.isVertical()) {
             double intersectionX = other.start().getX();
-            double intersectionY = this.slope() * intersectionX + this.getFreePart();
+            double intersectionY = this.slope() * intersectionX + this.freePart;
 
             return intersectionX >= this.start().getX() && intersectionX <= this.end().getX()
                     && intersectionY >= other.start().getY() && intersectionY <= other.end().getY();
@@ -213,13 +213,13 @@ public class Line {
         // other is vertical, this is not
         if (other.isVertical() && !this.isVertical()) {
             double intersectionX = other.start().getX();
-            double intersectionY = this.slope() * intersectionX + this.getFreePart();
+            double intersectionY = this.slope() * intersectionX + this.freePart;
             return new Point(intersectionX, intersectionY);
         }
 
         // both lines are not vertical
-        if (this.doubleEquals(this.slope, other.slope())
-                && this.doubleEquals(this.freePart, other.getFreePart())) {
+        if (Utility.doubleEquals(this.slope, other.slope())
+                && Utility.doubleEquals(this.freePart, other.getFreePart())) {
 
             // check all combinations of endpoints
             if (this.start.equals(other.end)) {
@@ -236,7 +236,7 @@ public class Line {
         }
 
         // calculate intersection point, slope must be different at this point.
-        double intersectionX = (other.getFreePart() - this.getFreePart()) / (this.slope - other.slope());
+        double intersectionX = (other.getFreePart() - this.freePart) / (this.slope - other.slope());
         double intersectionY = this.slope * intersectionX + this.freePart;
         return new Point(intersectionX, intersectionY);
     }

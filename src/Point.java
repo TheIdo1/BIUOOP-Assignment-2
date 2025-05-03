@@ -3,8 +3,8 @@
  */
 public class Point {
     //fields
-    private final double x;
-    private final double y;
+    private double x;
+    private double y;
 
     /**
      * Constructs a point with given x and y values.
@@ -14,16 +14,6 @@ public class Point {
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
-    }
-
-    /**
-     * Compares two double values using a fixed threshold.
-     * @param a first double
-     * @param b second double
-     * @return true if the values are considered equal, false otherwise.
-     */
-    public boolean doubleEquals(double a, double b) {
-        return Math.abs(a - b) < 0.0000001;
     }
 
     /**
@@ -46,7 +36,7 @@ public class Point {
         if (other == null) {
             return false;
         }
-        return (this.doubleEquals(this.getX(), other.getX()) && this.doubleEquals(this.getY(), other.getY()));
+        return (Utility.doubleEquals(this.x, other.getX()) && Utility.doubleEquals(this.y, other.getY()));
     }
 
     /**
@@ -54,7 +44,7 @@ public class Point {
      * @return a new Point with same coordinates
      */
     public Point copy() {
-        return new Point(this.getX(), this.getY());
+        return new Point(this.x, this.y);
     }
 
     /**
@@ -72,4 +62,21 @@ public class Point {
     public double getY() {
         return this.y;
     }
+
+    /**
+     * Sets the x-coordinate.
+     * @param x x value
+     */
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    /**
+     * Sets the y-coordinate.
+     * @param y y value
+     */
+    public void setY(double y) {
+        this.y = y;
+    }
 }
+
